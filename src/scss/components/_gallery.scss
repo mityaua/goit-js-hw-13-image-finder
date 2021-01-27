@@ -1,0 +1,51 @@
+// Галлерея (список)
+.gallery {
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  list-style: none;
+
+  margin-left: -20px;
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+// Элемент списка
+.gallery-item {
+  margin-left: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+
+  flex-basis: calc(100% / 3 - 20px);
+}
+
+// Карточка целиком
+.photo-card {
+  border-radius: 5px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
+    1px 4px 6px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+}
+
+// Контейнер статистики
+.stats {
+  padding: 20px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+// Блок иконок
+.stats-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Иконка
+.material-icons {
+  margin-right: 10px;
+}

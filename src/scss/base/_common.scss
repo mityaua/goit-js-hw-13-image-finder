@@ -1,0 +1,33 @@
+// body {
+//   background: linear-gradient(322deg, #ba4aff, rgba(#ba4aff, 0) 70%),
+//     linear-gradient(178deg, #008aff, rgba(#008aff, 0) 70%),
+//     linear-gradient(24deg, #00ffc6, rgba(#00ffc6, 0) 35%);
+
+//   background-repeat: no-repeat;
+//   background-attachment: fixed;
+// }
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+// Контейнер
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  width: 1200px;
+}

@@ -1,0 +1,32 @@
+// Форма поиска
+.search-box {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+// Инпут
+.search-bar {
+  padding: 15px;
+  height: 35px;
+
+  border: 2px solid #b9b9bd;
+  border-radius: 5px;
+
+  color: #3b3b3f;
+  // background-color: #e0e4e8;
+
+  font-weight: 500;
+
+  opacity: 0.8;
+
+  &::placeholder {
+    font-weight: 300;
+  }
+
+  &:focus {
+    opacity: 1;
+    outline: transparent;
+    border: 2px solid #978a88;
+  }
+}
