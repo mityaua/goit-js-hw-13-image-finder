@@ -1,20 +1,11 @@
-.load-btn {
+#load-btn {
   display: block;
-
-  width: 150px;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 20px;
-  padding: 14px;
   border: 0;
-  border-radius: 5px;
 
-  color: #ffffff;
   background-color: #2496e2;
-
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
 
   opacity: 1;
 
@@ -25,8 +16,16 @@
     opacity: 0.8;
     cursor: pointer;
   }
+
+  &.is-hidden {
+    display: none;
+  }
 }
 
-.load-btn.is-hidden {
+.btn-spinner {
+  display: inline-block;
+}
+
+.btn-spinner.is-hidden {
   display: none;
 }
