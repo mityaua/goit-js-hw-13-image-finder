@@ -1,27 +1,32 @@
 import debounce from 'lodash/debounce';
 import alert from './js/notify';
 
-import 'material-design-icons/iconfont/material-icons.css';
 import './scss/main.scss';
+import 'material-design-icons/iconfont/material-icons.css';
 
-import './js/apiService';
 import apiService from './js/apiService';
 import updateGallery from './js/updateGallery';
 
-import { formRef, inputRef, galleryRef, loadMoreBtnRef } from './js/refs';
+import {
+  formRef,
+  inputRef,
+  galleryRef,
+  loadMoreBtnRef,
+  spinnerRef,
+} from './js/refs';
 
 // Слушатели событий
 inputRef.addEventListener('input', debounce(searchImages, 1000));
 formRef.addEventListener('submit', event => {
   event.preventDefault();
 });
+loadMoreBtnRef.addEventListener('click', fetchAll);
 
 // Функция для поиска
 function searchImages(event) {
   apiService.query = event.target.value;
 
   if (apiService.query === '') {
-    clearContainer();
     return alert({
       type: 'notice',
       text: 'Type the requested 🔎',
@@ -31,18 +36,35 @@ function searchImages(event) {
     });
   }
 
-  clearContainer();
+  galleryRef.innerHTML = '';
 
-  apiService.fetchImages().then(updateGallery);
+  apiService.resetPage();
+
+  fetchAll();
 }
 
-// Кнопка для загрузки картинок
-loadMoreBtnRef.addEventListener('click', () => {
-  apiService.fetchImages().then(updateGallery);
-});
+// Фетч
+function fetchAll() {
+  loadMoreBtnRef.classList.add('is-hidden');
+  spinnerRef.classList.remove('is-hidden');
 
-// Функция для очистки сетки
-function clearContainer() {
-  galleryRef.innerHTML = '';
-  apiService.resetPage();
+  apiService
+    .fetchImages()
+    .then(images => {
+      if (images.length === 0) {
+        return alert({
+          type: 'notice',
+          text: 'Nothing found ☹',
+          delay: 2000,
+          width: '300px',
+          maxTextHeight: null,
+        });
+      }
+
+      updateGallery(images);
+      loadMoreBtnRef.classList.remove('is-hidden');
+    })
+    .finally(() => {
+      spinnerRef.classList.add('is-hidden');
+    });
 }
