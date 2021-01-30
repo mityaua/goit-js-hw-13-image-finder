@@ -1,12 +1,13 @@
 import debounce from 'lodash/debounce';
 import alert from './js/notify';
 
-import './scss/main.scss';
-import 'material-design-icons/iconfont/material-icons.css';
-
 import apiService from './js/apiService';
 import updateGallery from './js/updateGallery';
 import LoadMoreBtn from './js/components/loadMoreBtn';
+import './js/lightbox';
+
+import './scss/main.scss';
+import 'material-design-icons/iconfont/material-icons.css';
 
 import { formRef, inputRef, galleryRef } from './js/refs';
 
@@ -17,8 +18,9 @@ inputRef.addEventListener('input', debounce(searchFormHandler, 1000));
 formRef.addEventListener('submit', event => {
   event.preventDefault();
 });
-loadMoreBtn.refs.button.addEventListener('click', fetchGalley);
+loadMoreBtn.refs.button.addEventListener('click', fetchGallery);
 
+// Поиск
 function searchFormHandler(event) {
   apiService.query = event.target.value;
 
@@ -36,14 +38,15 @@ function searchFormHandler(event) {
 
   clearContainer();
   apiService.resetPage();
-  fetchGalley();
+  fetchGallery();
 }
 
-function fetchGalley() {
+function fetchGallery() {
   loadMoreBtn.disabled();
 
   apiService.fetchImages().then(images => {
     if (images.length === 0) {
+      loadMoreBtn.hide();
       return alert({
         type: 'notice',
         text: 'Nothing found ☹',
@@ -57,19 +60,9 @@ function fetchGalley() {
     loadMoreBtn.show();
     loadMoreBtn.enable();
 
-    console.log(galleryRef.scrollHeight);
-    console.log(document.documentElement.offsetHeight);
-    console.log(galleryRef.offsetTop);
-
-    galleryRef.scrollIntoView();
-
-      //  window.scrollTo({
-      //    top: document.documentElement.offsetHeight,
-      //  });
-
-    // window.scrollTo({
-    //   top: document.documentElement.offsetHeight - galleryRef.scrollHeight,
-    // });
+    //  window.scrollTo({
+    //    top: galleryRef.offsetHeight,
+    //  });
   });
 }
 
