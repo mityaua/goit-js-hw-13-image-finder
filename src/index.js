@@ -29,7 +29,7 @@ function searchFormHandler(event) {
     loadMoreBtn.hide();
     return alert({
       type: 'notice',
-      text: 'Type the requested 🔎',
+      text: 'Type the request 🔎',
       delay: 2000,
       width: '300px',
       maxTextHeight: null,
@@ -41,6 +41,7 @@ function searchFormHandler(event) {
   fetchGallery();
 }
 
+// Фетч и отрисовка
 function fetchGallery() {
   loadMoreBtn.disabled();
 
@@ -60,13 +61,22 @@ function fetchGallery() {
     loadMoreBtn.show();
     loadMoreBtn.enable();
 
-    //  window.scrollTo({
-    //    top: galleryRef.offsetHeight,
-    //  });
+    scrollToTop();
   });
 }
 
 // Очищает контент
 function clearContainer() {
   galleryRef.innerHTML = '';
+}
+
+// Скроллит контент
+function scrollToTop() {
+  if (galleryRef.children.length > apiService.perPage) {
+    const { scrollTop, clientHeight } = document.documentElement;
+
+    window.scrollTo({
+      top: scrollTop + clientHeight,
+    });
+  }
 }
