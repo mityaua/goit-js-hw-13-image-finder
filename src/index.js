@@ -2,25 +2,27 @@ import debounce from 'lodash/debounce';
 import alert from './js/notify';
 
 import apiService from './js/apiService';
-import updateGallery from './js/updateGallery';
-import LoadMoreBtn from './js/components/loadMoreBtn';
-import './js/lightbox';
+import updateGallery from './js/update-gallery';
+import LoadMoreBtn from './js/components/load-more-btn';
 
+import './js/back-to-top';
+import './js/lightbox';
 import './scss/main.scss';
+
 import 'material-design-icons/iconfont/material-icons.css';
 
 import { formRef, inputRef, galleryRef } from './js/refs';
 
 const loadMoreBtn = new LoadMoreBtn('#load-btn');
 
-// Слушатели событий
+// Listeners
 inputRef.addEventListener('input', debounce(searchFormHandler, 1000));
 formRef.addEventListener('submit', event => {
   event.preventDefault();
 });
 loadMoreBtn.refs.button.addEventListener('click', fetchGallery);
 
-// Поиск
+// Search
 function searchFormHandler(event) {
   apiService.query = event.target.value;
 
@@ -41,7 +43,7 @@ function searchFormHandler(event) {
   fetchGallery();
 }
 
-// Фетч и отрисовка
+// Fetch & render
 function fetchGallery() {
   loadMoreBtn.disabled();
 
@@ -65,12 +67,12 @@ function fetchGallery() {
   });
 }
 
-// Очищает контент
+// Clear content
 function clearContainer() {
   galleryRef.innerHTML = '';
 }
 
-// Скроллит контент
+// Scroll content
 function scrollToTop() {
   if (galleryRef.children.length > apiService.perPage) {
     const { scrollTop, clientHeight } = document.documentElement;

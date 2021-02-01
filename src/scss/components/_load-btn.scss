@@ -6,11 +6,11 @@
   margin-bottom: 20px;
   border: 0;
 
-  background-color: #2496e2;
+  background-color: #4285f4;
 
   opacity: 1;
 
-  transition: opacity 250ms ease-out;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover,
   &:focus {

@@ -8,7 +8,20 @@
 // Title
 .title {
   margin-bottom: 20px;
-  color: #3b3b3f;
+  color:  #6e6c6c;
+
+  & > .blue {
+    color: #4285f4;
+  }
+  & > .red {
+    color:#ea4335;
+  }
+  & > .yellow {
+    color: #fbbc05;
+  }
+  & > .green {
+    color: #34a853;
+  }
 }
 
 // Input
@@ -19,10 +32,12 @@
   border: 2px solid #b9b9bd;
   border-radius: 5px;
 
-  color: #3b3b3f;
+  color: #6e6c6c;
   font-weight: 500;
 
   opacity: 0.8;
+
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 
   &::placeholder {
     font-weight: 300;
@@ -31,6 +46,6 @@
   &:focus {
     opacity: 1;
     outline: transparent;
-    border: 2px solid #2496e2;
+    border: 2px solid #4285f4;
   }
 }
