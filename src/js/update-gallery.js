@@ -1,5 +1,5 @@
 import galleryTpl from '../templates/gallery-item.hbs';
-import { galleryRef } from './refs';
+import { galleryRef } from './references/refs';
 
 function updateGallery(hits) {
   const markup = galleryTpl(hits);

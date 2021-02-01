@@ -1,7 +1,7 @@
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
 
-import { galleryRef } from './refs';
+import { galleryRef } from '../references/refs';
 
 galleryRef.addEventListener('click', openModal);
 
