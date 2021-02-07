@@ -1,8 +1,9 @@
 import debounce from 'lodash/debounce';
-import alert from './plugins/notify';
 import apiService from './apiService';
 import updateGallery from './update-gallery';
+import alert from './plugins/notify';
 import LoadMoreBtn from './components/load-more-btn';
+import scrollToTop from './plugins/scroll-to-top'
 import { formRef, inputRef, galleryRef } from './references/refs';
 
 const loadMoreBtn = new LoadMoreBtn('#load-btn');
@@ -39,8 +40,9 @@ function searchFormHandler(event) {
 function fetchGallery() {
   loadMoreBtn.disabled();
 
+  // Asyns & await need, try catch (починить условие)
   apiService.fetchImages().then(images => {
-    if (images.length === 0) {
+    if (images.total === 0) {
       loadMoreBtn.hide();
       return alert({
         type: 'notice',
@@ -62,15 +64,4 @@ function fetchGallery() {
 // Clear content
 function clearContainer() {
   galleryRef.innerHTML = '';
-}
-
-// Scroll content
-function scrollToTop() {
-  if (galleryRef.children.length > apiService.perPage) {
-    const { scrollTop, clientHeight } = document.documentElement;
-
-    window.scrollTo({
-      top: scrollTop + clientHeight,
-    });
-  }
 }
