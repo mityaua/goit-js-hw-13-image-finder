@@ -3,7 +3,7 @@ import apiService from './apiService';
 import updateGallery from './update-gallery';
 import alert from './plugins/notify';
 import LoadMoreBtn from './components/load-more-btn';
-import scrollToTop from './plugins/scroll-to-top'
+import scrollToTop from './plugins/scroll-to-top';
 import { formRef, inputRef, galleryRef } from './references/refs';
 
 const loadMoreBtn = new LoadMoreBtn('#load-btn');
@@ -36,12 +36,13 @@ function searchFormHandler(event) {
   fetchGallery();
 }
 
-// Fetch & render
-function fetchGallery() {
+// Fetch
+async function fetchGallery() {
   loadMoreBtn.disabled();
 
-  // Asyns & await need, try catch (починить условие)
-  apiService.fetchImages().then(images => {
+  try {
+    const images = await apiService.fetchImages();
+
     if (images.total === 0) {
       loadMoreBtn.hide();
       return alert({
@@ -53,12 +54,23 @@ function fetchGallery() {
       });
     }
 
+    // Need to test keywords like "andromeda" & "xiaomi"!
+    if (
+      images.total > apiService.perPage &&
+      images.hits.length >= apiService.perPage
+    ) {
+      loadMoreBtn.show();
+      loadMoreBtn.enable();
+    } else {
+      loadMoreBtn.hide();
+    }
+
     updateGallery(images);
-    loadMoreBtn.show();
-    loadMoreBtn.enable();
 
     scrollToTop();
-  });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // Clear content

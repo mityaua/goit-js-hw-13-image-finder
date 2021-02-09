@@ -11,7 +11,9 @@ export default {
     const { data } = await axios.get(
       `${url}?image_type=photo&orientation=horizontal&q=${this.query}&page=${this.page}&per_page=${this.perPage}&key=${key}`,
     );
+
     this.incrementPage();
+
     return data;
   },
 
