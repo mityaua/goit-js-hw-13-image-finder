@@ -1,8 +1,8 @@
 import debounce from 'lodash/debounce';
 import apiService from './apiService';
 import updateGallery from './update-gallery';
-import alert from './plugins/notify';
 import LoadMoreBtn from './components/load-more-btn';
+import alert from './plugins/notify';
 import scrollToTop from './plugins/scroll-to-top';
 import { formRef, inputRef, galleryRef } from './references/refs';
 
@@ -23,7 +23,7 @@ function searchFormHandler(event) {
     clearContainer();
     loadMoreBtn.hide();
     return alert({
-      type: 'notice',
+      type: 'info',
       text: 'Type the request 🔎',
       delay: 2000,
       width: '300px',
@@ -44,7 +44,7 @@ async function fetchGallery() {
     const images = await apiService.fetchImages();
 
     if (images.total === 0) {
-      loadMoreBtn.hide();
+
       return alert({
         type: 'notice',
         text: 'Nothing found ☹',
@@ -54,7 +54,6 @@ async function fetchGallery() {
       });
     }
 
-    // Need to test keywords like "andromeda" & "xiaomi"!
     if (
       images.total > apiService.perPage &&
       images.hits.length >= apiService.perPage
@@ -77,3 +76,18 @@ async function fetchGallery() {
 function clearContainer() {
   galleryRef.innerHTML = '';
 }
+
+// Intersection observer (test)
+// const onEntry = entries => {
+//   entries.forEach(entry => {
+//     if (entry.isIntersecting && apiService.query !== '') {
+//       fetchGallery();
+//     }
+//   });
+// };
+
+// const observer = new IntersectionObserver(onEntry, {
+//   rootMargin: '150px',
+// });
+
+// observer.observe(inter);

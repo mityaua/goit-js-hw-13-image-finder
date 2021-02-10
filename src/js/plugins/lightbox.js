@@ -5,8 +5,9 @@ import { galleryRef } from '../references/refs';
 
 galleryRef.addEventListener('click', openModal);
 
+// Open lightbox
 function openModal(event) {
-    event.preventDefault();
+  event.preventDefault();
 
   if (event.target.nodeName !== 'IMG') {
     return;
@@ -16,4 +17,13 @@ function openModal(event) {
   const instance = basicLightbox.create(img);
 
   instance.show();
+  window.addEventListener('keydown', closeModal);
+
+  // Close lightbox
+  function closeModal(event) {
+    if (event.code === 'Escape') {
+      instance.close();
+      window.removeEventListener('keydown', closeModal);
+    }
+  }
 }
