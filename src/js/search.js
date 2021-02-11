@@ -1,9 +1,10 @@
 import debounce from 'lodash/debounce';
 import apiService from './apiService';
 import updateGallery from './update-gallery';
+import infinityLoad from './plugins/infinity-load';
 import LoadMoreBtn from './components/load-more-btn';
 import alert from './plugins/notify';
-import scrollToTop from './plugins/scroll-to-top';
+// import scrollToNext from './plugins/scroll-to-next';
 import { formRef, inputRef, galleryRef } from './references/refs';
 
 const loadMoreBtn = new LoadMoreBtn('#load-btn');
@@ -13,7 +14,7 @@ inputRef.addEventListener('input', debounce(searchFormHandler, 1000));
 formRef.addEventListener('submit', event => {
   event.preventDefault();
 });
-loadMoreBtn.refs.button.addEventListener('click', fetchGallery);
+loadMoreBtn.refs.button.addEventListener('click', fetchGallery); // if IO is broken
 
 // Search
 function searchFormHandler(event) {
@@ -44,7 +45,7 @@ async function fetchGallery() {
     const images = await apiService.fetchImages();
 
     if (images.total === 0) {
-
+      loadMoreBtn.hide();
       return alert({
         type: 'notice',
         text: 'Nothing found ☹',
@@ -66,9 +67,11 @@ async function fetchGallery() {
 
     updateGallery(images);
 
-    scrollToTop();
+    infinityLoad(fetchGallery); //Need to test
+
+    // scrollToNext();
   } catch (error) {
-    console.log(error);
+    console.log('Smth wrong with request');
   }
 }
 
@@ -76,18 +79,3 @@ async function fetchGallery() {
 function clearContainer() {
   galleryRef.innerHTML = '';
 }
-
-// Intersection observer (test)
-// const onEntry = entries => {
-//   entries.forEach(entry => {
-//     if (entry.isIntersecting && apiService.query !== '') {
-//       fetchGallery();
-//     }
-//   });
-// };
-
-// const observer = new IntersectionObserver(onEntry, {
-//   rootMargin: '150px',
-// });
-
-// observer.observe(inter);
