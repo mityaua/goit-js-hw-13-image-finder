@@ -23,6 +23,7 @@ function searchFormHandler(event) {
   if (apiService.query === '') {
     clearContainer();
     loadMoreBtn.hide();
+
     return alert({
       type: 'info',
       text: 'Type the request 🔎',
@@ -46,6 +47,7 @@ async function fetchGallery() {
 
     if (images.total === 0) {
       loadMoreBtn.hide();
+      
       return alert({
         type: 'notice',
         text: 'Nothing found ☹',
