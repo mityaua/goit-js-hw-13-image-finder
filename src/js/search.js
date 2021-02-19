@@ -47,7 +47,7 @@ async function fetchGallery() {
 
     if (images.total === 0) {
       loadMoreBtn.hide();
-      
+
       return alert({
         type: 'notice',
         text: 'Nothing found ☹',
@@ -69,7 +69,9 @@ async function fetchGallery() {
 
     updateGallery(images);
 
-    infinityLoad(fetchGallery); //Need to test
+    if (images.hits.length > 0) {
+      infinityLoad(fetchGallery);
+    }
 
     // scrollToNext();
   } catch (error) {
